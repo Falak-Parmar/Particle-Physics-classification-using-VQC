@@ -19,10 +19,27 @@ The paper demonstrates that a VQC trained with **Quantum Natural Gradient Descen
 
 We use the **HIGGS dataset** (UCI ML Repository) as a proxy for the paper's particle physics simulation.
 
-- **Original paper's task:** pp → Z′ → tt̄ (signal) vs pp → tt̄ (background) at 14 TeV
-- **Features used:** 2 features — transverse momentum of hardest b-jet (pT,b1) and missing transverse energy (ET)
-- **Dataset size:** 5,000 samples (2,500 signal / 2,500 background)
+- **Original paper's task:** pp → Z′ → tt̄ (signal) vs pp → tt̄ (background) at 14 TeV — *uses a custom simulation, not publicly available*
+- **Our dataset:** UCI HIGGS — H → ττ (signal) vs background, 28 features (21 low-level + 7 high-level)
+- **Dataset size:** 5,000 samples
 - **Split:** 60% train / 20% val / 20% test
+
+### Feature Selection
+
+Since we use a different dataset than the paper, we select features by **correlation analysis** rather than blindly mapping the paper's feature names. The paper uses pT,b1 and E_T^miss; our baseline analysis found the following ranking for the HIGGS dataset:
+
+| Rank | CSV Col | Feature Name | Type |
+|------|---------|-------------|------|
+| 1 | 26 | m_bb (inv. mass of b-tagged jets) | high-level |
+| 2 | 4 | missing energy magnitude | low-level |
+| 3 | 28 | m_wwbb | high-level |
+| 4 | 1 | lepton pT | low-level |
+| 5 | 6 | jet 1 pt | low-level |
+| 6 | 13 | jet 2 b-tag | low-level |
+| 7 | 27 | m_wbb | high-level |
+| 8 | 25 | m_jlv | high-level |
+
+**Default 2-feature set:** columns 26 (m_bb) and 4 (missing energy magnitude)
 
 Place `HIGGS.csv.gz` in the `data/` folder (gitignored due to size).
 
@@ -90,13 +107,13 @@ Classification (threshold at 0)
 
 ## Results Summary
 
-| Model | Accuracy | AUC |
-|-------|----------|-----|
-| Classical MLP (baseline) | 54.5% | 0.556 |
-| VQC-GD | — | — |
-| VQC-QNG | — | — |
+| Model | Features | Accuracy | AUC |
+|-------|----------|----------|-----|
+| Classical MLP (baseline) | col 26, 4 | — | — |
+| VQC-GD (2 feat, 2 layers) | col 26, 4 | — | — |
+| VQC-QNG | col 26, 4 | — | — |
 
-*Paper reported: Classical NN 73.8% AUC, VQC-GD 77.3%, VQC-QNG 79.4%*
+*Paper reported (on their own dataset): Classical NN 73.8% AUC, VQC-GD 77.3%, VQC-QNG 79.4%*
 
 ---
 
