@@ -130,8 +130,12 @@ def load_higgs(
         )
     else:
         if feature_indices is None:
-            # Default: top-n from correlation-ranked features
-            feature_indices = HIGGS_FEATURE_RANKING[:n_features]
+            if n_features <= len(HIGGS_FEATURE_RANKING):
+                # Default: top-n from correlation-ranked features
+                feature_indices = HIGGS_FEATURE_RANKING[:n_features]
+            else:
+                # Fallback: take all features if n_features exceeds ranking
+                feature_indices = list(range(1, n_features + 1))
         X = data.iloc[:, feature_indices].values
         feat_names = [HIGGS_FEATURE_NAMES.get(c, f"col{c}") for c in feature_indices]
         print(f"Selected features (cols {feature_indices}): {feat_names}")

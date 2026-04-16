@@ -109,8 +109,8 @@ Classification (threshold at 0)
 
 | Model | Features | Accuracy | AUC |
 |-------|----------|----------|-----|
-| Classical MLP (baseline) | col 26, 4 | — | — |
-| VQC-GD (2 feat, 2 layers) | col 26, 4 | — | — |
+| Classical MLP (baseline) | col 26, 4 | 0.601 | 0.596 |
+| VQC-GD (2 feat, 2 layers) | col 26, 4 | 0.616 | 0.609 |
 | VQC-QNG | col 26, 4 | — | — |
 
 *Paper reported (on their own dataset): Classical NN 73.8% AUC, VQC-GD 77.3%, VQC-QNG 79.4%*
