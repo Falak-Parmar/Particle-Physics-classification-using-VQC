@@ -107,13 +107,18 @@ Classification (threshold at 0)
 
 ## Results Summary
 
-| Model | Features | Accuracy | AUC |
-|-------|----------|----------|-----|
-| Classical MLP (baseline) | col 26, 4 | 0.601 | 0.596 |
-| VQC-GD (2 feat, 2 layers) | col 26, 4 | 0.616 | 0.609 |
-| VQC-QNG | col 26, 4 | — | — |
+| Model | Features | Optimizer | Samples | Test AUC |
+|-------|----------|-----------|---------|----------|
+| Weak Classical MLP (Paper) | 2 | SGD | 5,000 | 0.596 |
+| **Max Possible Classical GD** | 2 | SGD | 5,000 | **0.697** |
+| Strong Classical MLP | 8 | Adam | 5,000 | 0.721 |
+| VQC Reproduction (Exp 01) | 2 | Adam | 5,000 | 0.613 |
+| **VQC optimized (Exp 01)** | 2 | **QNG** | 5,000 | **0.625** |
+| VQC Depth-4 (Exp 04) | 2 | QNG | 5,000 | 0.632 |
+| **VQC Scaling (Exp 02)** | **8** | **QNG** | 5,000 | **0.675** |
+| **VQC Small-Data (Exp 05)** | 2 | **QNG** | **500** | **0.670** |
 
-*Paper reported (on their own dataset): Classical NN 73.8% AUC, VQC-GD 77.3%, VQC-QNG 79.4%*
+*Note: The VQC achieves its highest efficiency per-sample at small dataset sizes (N=500), and its highest absolute performance at 8 features.*
 
 ---
 
