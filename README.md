@@ -7,24 +7,22 @@ A reproduction and extension of **Blance & Spannowsky (JHEP 2021)** — a hybrid
 
 ---
 
-## Final Project Status: Rigorous Benchmark
-Following a technical audit, this project was refactored to ensure statistical validity:
-1. **No Data Leakage:** Preprocessing scalers are fit strictly on training data.
-2. **Proper Loss:** Switched from MSE to **Binary Cross-Entropy (BCE)** for classification.
-3. **Statistical Power:** Final results are based on the **Mean of 5 Random Seeds**.
+## Final Project Status
+The evaluation framework adheres to standard statistical best practices:
+1. **Pipeline Integrity:** Preprocessing scalers are fit strictly on training data to prevent leakage.
+2. **Standardized Loss:** Binary Cross-Entropy (BCE) is used for all classification models.
+3. **Statistical Averaging:** All results are reported as the **Mean of 5 Random Seeds**.
 
 ---
 
 ## Results Summary (N=1000, 8 Features)
 
-The definitive project results, established through leak-free, multi-seeded evaluation:
+Established performance metrics across multiple initialization seeds:
 
 | Model | Loss Function | Mean Test AUC | Std Dev | Status |
 |-------|---------------|---------------|---------|--------|
 | **Classical MLP** | Log-Loss (BCE) | 0.5831 | ± 0.0519 | Benchmark |
 | **Quantum VQC** | **BCE** | **0.6209** | **± 0.0405** | **Champion** |
-
-**Quantum Advantage:** The VQC maintains a statistically robust edge of **+0.038 AUC** in the small-data regime.
 
 ---
 
@@ -34,16 +32,15 @@ The definitive project results, established through leak-free, multi-seeded eval
 .
 ├── notebook/                         # Consolidated research notebooks
 │   ├── 00_eda_higgs.ipynb            # Initial data exploration
-│   ├── 01_vqc_2features.ipynb        # Core VQC reproduction
 │   ├── ...                           # Ablation studies (Scaling, Depth, etc.)
 │   ├── 06_best_config_synthesis.ipynb # Optimized project configuration
-│   ├── 08_rigorous_reevaluation.ipynb # Final gold-standard truth test
+│   ├── 08_final_evaluation.ipynb      # Cross-benchmark statistical evaluation
 │   └── strong_baseline_mlp.ipynb     # Classical benchmark logic
 ├── reports/                          # Detailed findings for each phase
 │   ├── exp1-exp5_findings.md         # Ablation study reports
 │   └── Optimized_strat.md            # Final project synthesis
 ├── utils/
-│   └── data_utils.py                 # Refactored, leak-free data engine
+│   └── data_utils.py                 # Core data processing engine
 ├── figures/                          # Visual evidence (ROC, Loss curves)
 ├── requirements.txt                  # Pinned dependencies
 └── README.md

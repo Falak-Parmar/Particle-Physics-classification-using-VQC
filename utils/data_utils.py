@@ -31,12 +31,12 @@ def load_higgs(
     random_state=42,
 ):
     """
-    Load and preprocess the HIGGS dataset with statistical rigor.
+    Load and preprocess the HIGGS dataset.
     
-    Fixes:
-    - Random sampling from a large buffer (prevents sequential bias).
-    - Splitting before scaling (prevents data leakage).
-    - Scaler fitted only on training data.
+    Implementation details:
+    - Randomized sampling from a large buffer for dataset representativeness.
+    - Train-Validation-Test splitting prior to feature scaling.
+    - MinMaxScaler fitting performed exclusively on the training partition.
     """
     # Load a buffer to ensure we sample from different parts of the dataset
     # 100k is safe for memory and provides a good pool
