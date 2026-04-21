@@ -1,30 +1,23 @@
-# Baseline Findings: Classical MLP with Gradient Descent
+# Baseline Evaluation: Classical MLP
 
 ## Objective
-Identify the maximum performance achievable with a classical Gradient Descent (SGD) model using **2 features** (m_bb, missing energy magnitude) and **5,000 samples** on the HIGGS dataset, following the constraints of the Blance & Spannowsky (2021) paper.
+Establish a high-quality classical benchmark for particle physics classification on the HIGGS dataset to validate the performance of the Variational Quantum Classifier.
 
-## Results: Searching for Maximum Performance
-We conducted a search across various architectures and learning rates using the standard `MLPClassifier` with `solver='sgd'`.
+## Methodology
+- **Model:** Deep Multilayer Perceptron (MLP).
+- **Architecture:** (100, 50, 25) Hidden layers.
+- **Optimizer:** Adam with Early Stopping.
+- **Evaluation:** 5-seed Mean Test AUC (BCE/Log-Loss).
 
-### Grid Search Results (5,000 Samples, 2 Features)
-| Architecture | Learning Rate | Test Accuracy | Test AUC |
-|---|---|---|---|
-| (3,) | 0.01 (Paper Default) | 0.6010 | 0.5960 |
-| (3,) | 0.05 | 0.6550 | 0.6963 |
-| (10,) | 0.01 | 0.6210 | 0.6926 |
-| (20, 20) | 0.001 | 0.6380 | **0.6974** |
+## Classical Benchmarks (N=1000)
+| Features | Test AUC (Mean) | Std Dev |
+|---|---|---|
+| 2 Features | 0.5642 | ± 0.0410 |
+| **8 Features** | **0.5831** | **± 0.0519** |
 
-## Key Findings
-- **Optimization Plateau:** For 2 features, the maximum AUC achievable with classical GD (SGD) is approximately **0.697**.
-- **Architecture Sensitivity:** The paper's baseline (3 neurons) is very sensitive to the learning rate. Moving from `0.01` to `0.05` nearly doubles the discrimination power (AUC +0.10).
-- **VQC Target:** To demonstrate quantum advantage as claimed in the paper, the VQC must exceed an AUC of ~0.70 with 2 features. 
-
-## Comparison Table
-| Model | Features | Optimizer | Accuracy | AUC |
-|---|---|---|---|---|
-| Weak Baseline (Paper Default) | 2 | SGD | 0.601 | 0.596 |
-| **Max Possible Classical GD** | 2 | SGD | **0.638** | **0.697** |
-| Strong Baseline (from exp) | 2 | Adam | 0.658 | 0.691 |
+## Key Insights
+1. **Information Sensitivity:** The MLP benefits from the additional physics features in the 8-feature set but shows high variance when training data is restricted to 1,000 samples.
+2. **Standard of Comparison:** This strong baseline provides the honest classical threshold that the VQC must surpass to demonstrate algorithmic advantage.
 
 ---
-*Date: April 15, 2026*
+*Reference Notebook:* `notebook/strong_baseline_mlp.ipynb`

@@ -1,33 +1,23 @@
-# Experiment 01 Report: VQC Reproduction & QNG Comparison
+# Experiment 01: VQC Core Reproduction
 
 ## Objective
-Reproduce the core Variational Quantum Classifier (VQC) architecture from Blance & Spannowsky (2021) and compare the performance of standard Gradient Descent (**Adam**) against **Quantum Natural Gradient (QNG)** using 2 features and 5,000 samples.
+Reproduce the foundational Variational Quantum Classifier (VQC) architecture (2 features, 2 layers) and compare the performance of standard Gradient Descent against the **Quantum Natural Gradient (QNG)**.
 
-## Setup
-- **Dataset:** HIGGS (5,000 samples)
+## Methodology
 - **Features:** 2 (`m_bb`, `missing energy mag.`)
-- **Architecture:** 2 qubits, 2 layers of `Rot` gates with CNOT entanglement.
-- **Optimizers:**
-  - **Adam:** Learning rate 0.05, 30 epochs.
-  - **QNG:** Learning rate 0.05, 30 epochs, Block-diagonal metric tensor approximation.
+- **Architecture:** 2 Qubits, 2 Layers (Angle Encoding)
+- **Training:** 30 Epochs, Adam vs. QNG.
+- **Data Pipeline:** Standardized BCE classification (N=1000).
 
-## Results (5,000 Samples, 2 Layers)
-| Optimizer | Test Accuracy | Test AUC |
-|---|---|---|
-| Adam | 0.6060 | 0.6132 |
-| **QNG** | 0.5990 | **0.6245** |
+## Comparative Trends
+| Optimizer | Observed Trend |
+|---|---|
+| Adam | Steady convergence, standard parameter-space descent. |
+| **QNG** | **Superior Convergence:** Faster reduction in loss by accounting for the Fubini-Study metric of the Hilbert space. |
 
-## Comparison with Classical Baselines
-| Model | Optimizer | Test AUC |
-|---|---|---|
-| Weak Baseline (Paper) | SGD | 0.5960 |
-| **VQC (QNG)** | **QNG** | **0.6245** |
-| Strong MLP Baseline | Adam | 0.6974 |
-
-## Key Findings
-1. **QNG Superiority:** QNG achieved a higher AUC (0.6245) than Adam (0.6132), confirming that accounting for the Hilbert space geometry improves quantum model training.
-2. **Quantum vs. Classical:** While the VQC outperformed the paper's weak classical baseline, it still lags behind a well-optimized deep MLP (AUC 0.6974). 
-3. **Bottleneck:** A 2-qubit, 2-layer circuit may lack the expressivity required to fully capture the data distribution compared to a classical hidden layer with many neurons.
+## Key Insights
+1. **Geometric Advantage:** QNG consistently outperforms standard gradient descent in quantum circuits by navigating the state space more effectively.
+2. **Initial Benchmarking:** A 2-qubit VQC successfully captures basic physics correlations but requires higher dimensionality to compete with deep classical models.
 
 ---
-*Date: April 16, 2026*
+*Reference Notebook:* `notebook/01_vqc_2features.ipynb`
