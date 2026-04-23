@@ -7,28 +7,30 @@ A reproduction and extension of **Blance & Spannowsky (JHEP 2021)** — a hybrid
 
 ---
 
-## Final Project Status
-The evaluation framework adheres to standard statistical best practices:
-1. **Pipeline Integrity:** Preprocessing scalers are fit strictly on training data to prevent leakage.
-2. **Standardized Loss:** Binary Cross-Entropy (BCE) is used for all classification models.
-3. **Statistical Averaging:** Results are reported as the **Mean of 5 Random Seeds**.
+## Performance Summary
+
+Established performance metrics from the research arc, comparing the classical baseline against our optimized quantum configurations.
+
+### 1. Research Arc Results (Ablation Phase)
+| Phase | Model | Features | Samples | Test AUC |
+|---|---|---|---|---|
+| Baseline | Classical MLP | 2 | 5,000 | 0.596 |
+| Exp 01 | VQC Reproduction | 2 | 5,000 | 0.609 |
+| Exp 02 | **VQC Feature Scaling** | **8** | **5,000** | **0.677** |
+| Exp 03 | Encoding (Re-uploading) | 2 | 5,000 | 0.600 |
+| Exp 05 | VQC Small-Data | 2 | 500 | 0.670 |
+
+### 2. Final Statistical Validation (Rigorous Phase)
+Validated using a leak-free pipeline and 5-seed statistical averaging (N=1000, 8 features):
+
+| Model | Loss Function | Mean Test AUC | Std Dev |
+|---|---|---|---|
+| Classical MLP | Log-Loss (BCE) | 0.5831 | ± 0.0519 |
+| **Quantum VQC** | **BCE** | **0.6209** | **± 0.0405** |
 
 ---
 
-## Results Summary (N=1000, 8 Features)
-
-Established performance metrics across multiple initialization seeds:
-
-| Model | Loss Function | Mean Test AUC | Std Dev | Status |
-|-------|---------------|---------------|---------|--------|
-| **Classical MLP** | Log-Loss (BCE) | 0.5831 | ± 0.0519 | Benchmark |
-| **Quantum VQC** | **BCE** | **0.6209** | **± 0.0405** | **Champion** |
-
-**Conclusion:** The VQC maintains a statistically robust algorithmic edge of **+0.038 AUC** in the small-data regime.
-
----
-
-## Project Structure (The Research Arc)
+## Project Structure
 
 The research is organized into a sequential pipeline of 8 notebooks:
 
@@ -36,19 +38,19 @@ The research is organized into a sequential pipeline of 8 notebooks:
 |---|---|---|
 | **00** | `00_eda_higgs.ipynb` | Initial data exploration and feature correlation analysis. |
 | **01** | `01_vqc_2features.ipynb` | Core reproduction of the paper's 2-feature VQC. |
-| **02** | `02_feature_scaling.ipynb` | Scaling study: How performance grows from 2 to 8 qubits. |
+| **02** | `02_feature_scaling.ipynb` | Scaling study: Performance growth from 2 to 8 qubits. |
 | **03** | `03_encoding_strategies.ipynb` | Comparing Angle vs. Amplitude vs. Data Re-uploading. |
 | **04** | `04_circuit_depth.ipynb` | Investigation of layers (1 to 4) and training stability. |
 | **05** | `05_dataset_size.ipynb` | Evaluating the VQC's unique "Small-Data Advantage". |
 | **06** | `06_best_config_synthesis.ipynb` | **The Champion Model:** Combining all winning architectural choices. |
-| **07** | `07_final_evaluation.ipynb` | **Scientific Validation:** 5-seed cross-benchmark against classical MLP. |
+| **07** | `07_final_evaluation.ipynb` | **Scientific Validation:** 5-seed statistical cross-benchmark. |
 
 ---
 
 ## Technical Stack
 - **Library:** PennyLane (0.44.0)
 - **Backend:** `lightning.qubit` (Optimized C++ simulator)
-- **Data:** UCI HIGGS Dataset (Standardized to BCE classification)
+- **Data:** UCI HIGGS Dataset
 
 ---
 

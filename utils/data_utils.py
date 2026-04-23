@@ -22,7 +22,7 @@ HIGGS_FEATURE_NAMES = {
 }
 
 def load_higgs(
-    path="../data/HIGGS.csv.gz",
+    path="data/HIGGS.csv.gz",
     n_samples=5000,
     n_features=2,
     feature_indices=None,
