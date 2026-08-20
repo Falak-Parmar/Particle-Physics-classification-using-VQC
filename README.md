@@ -64,3 +64,15 @@ pip install -r requirements.txt
 ## References
 - Blance & Spannowsky, *Quantum machine learning for particle physics using a variational quantum classifier*, JHEP 02 (2021) 212.
 - Baldi et al., *Searching for Exotic Particles in High-Energy Physics with Deep Learning*, Nature Comm. 5 (2014).
+
+## Trust & Transparency notes
+
+- **Source & Attribution**: Formulated as a research replication of Blance & Spannowsky (JHEP 2021) using the open-source UCI HIGGS dataset. All quantum simulations are implemented using the [PennyLane](https://pennylane.ai/) framework.
+- **Motive**: Created as a course project for IT401 Quantum Machine Learning to explore quantum classification bounds, variational ansatz designs, and small-sample learning trends.
+- **Modifications**: Coded comparative notebooks analyzing qubit scaling bounds, encoding transformations, circuit depth, and statistical seed testing.
+- **Limitations**:
+  - Executed entirely on classical simulators (`lightning.qubit`); physical quantum noise, gate decoherence, and real QPUs errors are not modeled.
+  - Due to the high CPU overhead of simulating quantum states, data samples are limited to 5,000 observations during training.
+  - Scaling features above 8 qubits is constrained by simulation bottlenecking and optimization issues like barren plateaus.
+- **Tooling & AI Usage**: AI coding assistants via the Antigravity CLI were utilized to configure PennyLane circuit definitions, structure the PyTorch-based training wrappers, and format LaTeX-style equation blocks in the reports.
+
